@@ -1,0 +1,576 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://{{SEU-DOMINIO-EVOLUTION}}/message/sendText/{{SUA-INSTANCIA-EVOLUTION}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Telefone e Mensagem1').item.json.TELEFONE }}@s.whatsapp.net"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.mensagem }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4b0bf99f-a27f-4534-b578-7eab742c8020",
+      "name": "(EVO) Enviar Mensagem1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4240,
+        2032
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "evolution_api"
+        }
+      },
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "=0 0 14 20 6 *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        3120,
+        2128
+      ],
+      "id": "5d97176c-af99-4960-b94f-6d0871878b1f",
+      "name": "Gatilho1",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3520,
+        2128
+      ],
+      "id": "a1a5bfa5-6b23-47bd-9c2a-6300f27075e1",
+      "name": "Fim",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Fim3",
+      "typeVersion": 1,
+      "position": [
+        3792,
+        1936
+      ],
+      "id": "5f8c6247-c047-4cdf-9185-7959dd959fd5",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "## Gatilhos\nResponsáveis por iniciar o fluxo, seja em um horário programado (via agendamento) ou de forma manual para testes e execuções pontuais.",
+        "height": 520,
+        "width": 160,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3088,
+        1744
+      ],
+      "id": "61b2e38f-cfa8-4cdd-9fd8-898c6ae38866",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## Leitura de contatos\nBusca todos os números de WhatsApp registrados no Google Sheets para iniciar o disparo das mensagens.",
+        "height": 520,
+        "width": 180,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3264,
+        1744
+      ],
+      "id": "3c2de164-557e-4ea4-96d7-c5d734784f15",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## Verificação de status \nFiltra os contatos para identificar quais ainda não receberam a mensagem, evitando envios duplicados.",
+        "height": 520,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3472,
+        1744
+      ],
+      "id": "282eced3-f053-43af-bd90-da462fcdaa63",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "975edb01-d63d-4c4e-9a18-2f93e0dda23d",
+              "leftValue": "={{ $json.STATUS }}",
+              "rightValue": "NÃO ENVIADO",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3520,
+        1984
+      ],
+      "id": "16b5e94c-df41-441f-bf70-09929e192b40",
+      "name": "Mensagem Enviada?1",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "## Processamento individual\nSepara os contatos para que sejam processados um por vez, garantindo o envio sequencial das mensagens.",
+        "height": 520,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3728,
+        1744
+      ],
+      "id": "38cda9aa-c87a-47b2-84fa-e0eb8ea0981c",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3792,
+        2064
+      ],
+      "id": "13b8464c-80e2-48d4-9469-a9ebf82c1958",
+      "name": "Processar Contatos1",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "## Preparação dos dados\nSepara o número de telefone do lead e define a mensagem que será enviada pela API.\n\n",
+        "height": 520,
+        "width": 190,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3984,
+        1744
+      ],
+      "id": "0ec44f36-e944-4b95-9247-bc24cfb5e2e3",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8ad9bd09-c4fe-49f2-9c3a-2a2e2f116dbb",
+              "name": "TELEFONE",
+              "value": "={{ $('Mensagem Enviada?1').item.json.TELEFONE }}",
+              "type": "string"
+            },
+            {
+              "id": "e5894c3c-fe19-42e4-b932-5e9cdc73e880",
+              "name": "mensagem",
+              "value": "=Olá, {{ $json.Nome }}! Tudo bem? Aqui é o Carlos Bratz 👋\n\nSe você está lendo esta mensagem no meu repositório do GitHub, seja muito bem-vindo ao meu portfólio de Automação! \n\nEste é um texto de exemplo configurado para demonstrar como utilizo variáveis dinâmicas para personalizar a comunicação em massa. \n\nNeste projeto específico, o meu foco foi arquitetar um fluxo seguro e eficiente. Em vez de simplesmente disparar mensagens de uma vez e arriscar bloqueios na API, implementei:\n✅ Leitura e filtro de dados via Google Sheets;\n✅ Controle de filas (Split in Batches);\n✅ Pausas programadas para respeitar o Rate Limit da API.\n\nSe você gostou da organização e da lógica deste workflow, adoraria me conectar com você. Estou em busca de uma oportunidade de estágio e sempre aberto a bons desafios na área de tecnologia! 🚀\n\nMeu LinkedIn: linkedin.com/in/carlosjosebratz",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4032,
+        2032
+      ],
+      "id": "f793ca19-f5be-44fe-9a0a-47ea965e51b9",
+      "name": "Telefone e Mensagem1",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "## Envio da mensagem\nRealiza o disparo da mensagem para o número do lead utilizando a API da Evolution.\n\n",
+        "height": 520,
+        "width": 220,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4192,
+        1744
+      ],
+      "id": "a842ea97-c2d8-455e-945f-43f196159e3d",
+      "name": "Sticky Note15"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        3312,
+        2064
+      ],
+      "id": "dc2518f4-ccec-46b9-b81c-c7484b563894",
+      "name": "Listar Contatos1",
+      "credentials": {
+        "googleApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "SEU_GOOGLE_SHEETS_ID",
+          "mode": "list",
+          "cachedResultName": "NOME_DA_PLANILHA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/SEU_GOOGLE_SHEETS_ID/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/SEU_GOOGLE_SHEETS_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "STATUS": "ENVIADO",
+            "TELEFONE": "={{ $('Telefone e Mensagem1').item.json.TELEFONE }}"
+          },
+          "matchingColumns": [
+            "TELEFONE"
+          ],
+          "schema": [
+            {
+              "id": "NOME",
+              "displayName": "NOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "TELEFONE",
+              "displayName": "TELEFONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "STATUS",
+              "displayName": "STATUS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        4464,
+        2032
+      ],
+      "id": "84dad673-fb43-4d80-88c7-1cab2a552cce",
+      "name": "Atualizar Status1",
+      "credentials": {
+        "googleApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "## Atualização de status\nRegistra na planilha se a mensagem foi enviada com sucesso, evitando reenvios futuros.\n\n",
+        "height": 520,
+        "width": 180,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4432,
+        1744
+      ],
+      "id": "4744c766-a903-4d56-b933-843a8f066969",
+      "name": "Sticky Note16"
+    },
+    {
+      "parameters": {
+        "content": "## Controle de intervalo\nDefine um intervalo de tempo entre o envio de mensagens para cada contato, evitando disparos em massa rápidos.",
+        "height": 520,
+        "width": 180,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4624,
+        1744
+      ],
+      "id": "72359825-f258-4392-9bc4-b51ce74514b7",
+      "name": "Sticky Note17"
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4640,
+        2032
+      ],
+      "id": "28f2f968-0360-4131-ad1b-931b2c75fbd1",
+      "name": "Tempo1",
+      "webhookId": "YOUR_WEBHOOK_ID",
+      "notes": "TEMPLATE DESENVOLVIDO POR CARLOS BRATZ\nlinkedin.com/in/carlosjosebratz"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 880,
+        "width": 1800,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3040,
+        1424
+      ],
+      "id": "5166d61b-a38a-490c-9c65-e078a7606a71",
+      "name": "Sticky Note18"
+    },
+    {
+      "parameters": {
+        "content": "## Instruções de Uso\n🔴 Áreas em vermelho você deve realizar alterações de acordo com seu canal de entrada;\n🟢 Áreas em verde já estão pré configuradas para o canal do Template, caso vá utilizar outro canal, também fazer devidas alterações nesses nodes;\n\n⚠️ Atenção: \n1. Não altere nome de parâmetros pré-existentes para para evitar quebra do fluxo;\n2. Fique a vontade para adicionar novos parâmetros caso necessário;",
+        "height": 220,
+        "width": 690,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3088,
+        1472
+      ],
+      "id": "73b887a0-1986-4843-b057-47a46c961195",
+      "name": "Sticky Note24"
+    },
+    {
+      "parameters": {
+        "content": "## FLUXO DISPARO EM MASSA WHATSAPP",
+        "height": 80,
+        "width": 500,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3808,
+        1472
+      ],
+      "id": "e71c2724-cd1c-4ef3-8302-f3331275bfb6",
+      "name": "Sticky Note19"
+    }
+  ],
+  "connections": {
+    "(EVO) Enviar Mensagem1": {
+      "main": [
+        [
+          {
+            "node": "Atualizar Status1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gatilho1": {
+      "main": [
+        [
+          {
+            "node": "Listar Contatos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mensagem Enviada?1": {
+      "main": [
+        [
+          {
+            "node": "Processar Contatos1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fim",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Processar Contatos1": {
+      "main": [
+        [
+          {
+            "node": "Fim3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telefone e Mensagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telefone e Mensagem1": {
+      "main": [
+        [
+          {
+            "node": "(EVO) Enviar Mensagem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listar Contatos1": {
+      "main": [
+        [
+          {
+            "node": "Mensagem Enviada?1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Atualizar Status1": {
+      "main": [
+        [
+          {
+            "node": "Tempo1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tempo1": {
+      "main": [
+        [
+          {
+            "node": "Processar Contatos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "YOUR_INSTANCE_ID"
+  }
+}
