@@ -8,7 +8,6 @@ Processos manuais de comunicação consumiam muito tempo, estavam sujeitos a err
 ## 💡 A Solução (Arquitetura)
 Desenvolvimento de um workflow automatizado utilizando **n8n** integrado ao Google Sheets e à Evolution API. A arquitetura inclui leitura de banco de dados, filtragem de status de envio, orquestração de filas (Split in Batches) e pausas programadas.
 
-![Arquitetura do Fluxo](workflow-imagem.png)
 
 ## 🚀 Impacto e Resultados
 * **Otimização de Tempo:** Redução drástica do tempo despendido em tarefas de comunicação passiva.
